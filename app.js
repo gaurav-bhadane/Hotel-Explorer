@@ -65,7 +65,6 @@ app.post('/listings',async (req,res)=>{
     res.redirect("/listings")
 })
 
-
 //SHOW ROUTE
 
 app.get('/listings/:id',async (req,res)=>{
