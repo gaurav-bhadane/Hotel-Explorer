@@ -16,6 +16,9 @@
         </ul>
         <form method="get" action="/listings/<%=listings.id%>/edit">
             <button>Edit Listing</button>
+        </form><br>
+        <form method="post" action="/listings/<%=listings.id%>?_method=DELETE">
+            <button>Delete Listing</button>
         </form>
 </body>
 </html>
