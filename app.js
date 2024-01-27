@@ -45,6 +45,26 @@ app.get('/listings',async (req,res)=>{
     res.render("listing/index.ejs",{listings})
 })
 
+//NEW ROUTE
+
+app.get('/listings/new',(req,res)=>{
+    res.render("listing/new.ejs")
+})
+
+app.post('/listings',async (req,res)=>{
+    let {title,description,image,price,location,country}=req.body;
+    let newListing = new listing({
+        title:title,
+        description:description,
+        image:image,
+        price:price,
+        location:location,
+        country:country
+    })
+    await newListing.save().then(res=>console.log(res))
+    res.redirect("/listings")
+})
+
 
 //SHOW ROUTE
 
@@ -53,6 +73,8 @@ app.get('/listings/:id',async (req,res)=>{
     let listings=await listing.findById(id);
     res.render("listing/show.ejs",{listings})
 })
+
+
 
 app.get('/',(req,res)=>{
     res.send("Server Working")

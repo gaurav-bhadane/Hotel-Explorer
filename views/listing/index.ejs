@@ -7,10 +7,16 @@
 </head>
 <body>
     <h1>All Listings</h1>
+
+    <form method="GET" action="/listings/new">
+        <button>Create Listings</button>
+    </form>
+
     <% for(list of listings){ %>
         <ul>
             <li><a href="listings/<%= list.id %>"><%= list.title %></a></li>
         </ul>
     <% } %>
+
 </body>
 </html>
