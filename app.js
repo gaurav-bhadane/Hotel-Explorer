@@ -2,6 +2,8 @@ const express = require('express')
 const app = express();
 const mongoose =require('mongoose')
 const path = require('path')
+const methodOverride=require('method-override');
+app.use(methodOverride('_method'))
 
 app.set("view engine","ejs")
 app.set("views",path.join(__dirname,"/views/listing"))
@@ -64,6 +66,29 @@ app.post('/listings',async (req,res)=>{
     await newListing.save().then(res=>console.log(res))
     res.redirect("/listings")
 })
+
+//EDIT ROUTE
+
+app.get('/listings/:id/edit',async(req,res)=>{
+    let {id}=req.params;
+    let listings=await listing.findById(id);
+    res.render("listing/edit.ejs",{listings})
+})
+
+app.put('/listings/:id',async (req,res)=>{
+    let {id}=req.params;
+    let {title,description,image,price,location,country}=req.body;
+    let updtListing = await listing.findByIdAndUpdate(id,{
+        title:title,
+        description:description,
+        image:image,
+        price:price,
+        location:location,
+        country:country
+    },{runValidators:true},{new:true}).then(res=>console.log(res))
+    res.redirect(`/listings/${id}`)
+})
+
 
 //SHOW ROUTE
 
