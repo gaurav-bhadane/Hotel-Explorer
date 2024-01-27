@@ -5,7 +5,8 @@ const path = require('path')
 
 app.set("view engine","ejs")
 app.set("views",path.join(__dirname,"/views/listing"))
-
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 //requiring listing model
 const listing =require('./models/listing.js')
 
@@ -42,6 +43,15 @@ const port = 8080;
 app.get('/listings',async (req,res)=>{
     let listings = await listing.find()
     res.render("listing/index.ejs",{listings})
+})
+
+
+//SHOW ROUTE
+
+app.get('/listings/:id',async (req,res)=>{
+    let {id}=req.params;
+    let listings=await listing.findById(id);
+    res.render("listing/show.ejs",{listings})
 })
 
 app.get('/',(req,res)=>{
