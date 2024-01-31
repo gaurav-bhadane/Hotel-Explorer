@@ -63,8 +63,14 @@ font-family: 'Poppins', sans-serif; */
 
 .card-body{
     padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+.container{
+    flex: 1;
+}
 
 .card-text p{
     font-weight: 400 !important;
@@ -85,4 +91,9 @@ font-family: 'Poppins', sans-serif; */
 .card-img-overlay:hover{
     opacity: 0.2;
     background-color: white;
+}
+
+.add-btn{
+    background-color: #fe424d !important;
+    border: none !important;
 }

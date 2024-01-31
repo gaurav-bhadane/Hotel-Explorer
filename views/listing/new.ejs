@@ -1,13 +1,40 @@
 <%- layout("/layouts/boilerplate.ejs") %>
 <body>
+    <div class="row">
+    <div class="col-8 offset-2">
+    <br>
     <h1>Create Listing</h1>
     <form method="POST" action="/listings">
-        <input type="text" name="title" placeholder="Title"><br><br>
-        <input type="text" name="description" placeholder="Description"><br><br>
-        <input type="text" name="image" placeholder="Image/URL"><br><br>
-        <input type="text" name="price" placeholder="Price"><br><br>
-        <input type="text" name="location" placeholder="Location"><br><br>
-        <input type="text" name="country" placeholder="Country"><br><br>
-        <button>Submit</button>
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text"  class="form-control" name="title" placeholder="Title"><br>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" class="form-control" name="description" placeholder="Description"><br>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image/URL</label>
+            <input type="text" class="form-control" name="image" placeholder="Image/URL"><br>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" class="form-control" name="price" placeholder="Price"><br>
+            </div>
+            <div class="mb-3 col-md-8">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" name="location" placeholder="Location"><br>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" name="country" placeholder="Country"><br>
+        </div>
+        
+        <button class="btn btn-dark add-btn">Submit</button><br><br>
     </form>
+</div>
+</div>
 </body>
