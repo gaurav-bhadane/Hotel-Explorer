@@ -1,26 +1,47 @@
 <%- layout("/layouts/boilerplate.ejs") %>
 <body>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
     <h1>Edit Listing</h1><br>
     <h3>ID: <%= listings.id %></h3><br>
     <form method="post" action="/listings/<%= listings.id %>?_method=PUT">
-        <h3>Title: </h3>
-        <textarea name="title" id="" cols="30" rows="3" ><%= listings.title %></textarea>
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" class="form-control" name="title" value="<%= listings.title %>">
+            <br>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea name="description" class="form-control"  cols="30" rows="3"><%= listings.description %></textarea>
+            <br>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image:</label>
+            <input type="text" name="image" class="form-control" value="<%= listings.image %>">
+            <br>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-4">
+                <label for="price" class="form-label">Price:</label>
+                <input type="text" name="price" class="form-control" value="<%= listings.price %>">
+                <br>
+            </div>
+            <div class="mb-3 col-8">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" name="location" class="form-control" value="<%= listings.location %>">
+                <br>
+            </div>
+        </div>
+       
+        <div class="mb-3">
+            <label for="country" class="form-label">Country:</label>
+            <input type="text" name="country" class="form-control" value="<%= listings.country %>">
+            <br>
+        </div>
+        
+        <button class="btn btn-dark add-btn mt-3">Edit</button>
         <br><br>
-        <h3>Description: </h3>
-        <textarea name="description" id="" cols="30" rows="3"><%= listings.description %></textarea>
-        <br><br>
-        <h3>Image: </h3>
-        <textarea name="image" id="" cols="30" rows="3"><%= listings.image %></textarea>
-        <br><br>
-        <h3>Price: </h3>
-        <textarea name="price" id="" cols="30" rows="3"><%= listings.price %></textarea>
-        <br><br>
-        <h3>Location: </h3>
-        <textarea name="location" id="" cols="30" rows="3"><%= listings.location %></textarea>
-        <br><br>
-        <h3>Country: </h3>
-        <textarea name="country" id="" cols="30" rows="3"><%= listings.country %></textarea>
-        <br><br>
-        <button>Submit</button>
     </form>
+</div>
+</div>
 </body>
