@@ -4,7 +4,8 @@ const mongoose =require('mongoose')
 const path = require('path')
 const methodOverride=require('method-override');
 const ejsMate = require('ejs-mate');
-
+const wrapAsync=require("./utils/wrapAsync.js")
+const ExpressError=require('./utils/ExpressError')
 
 app.use(methodOverride('_method'))
 
@@ -50,10 +51,10 @@ const port = 8080;
 
 //INDEX ROUTE
 
-app.get('/listings',async (req,res)=>{
+app.get('/listings',wrapAsync(async (req,res)=>{
     let listings = await listing.find()
     res.render("listing/index.ejs",{listings})
-})
+}))
 
 //NEW ROUTE
 
@@ -61,8 +62,11 @@ app.get('/listings/new',(req,res)=>{
     res.render("listing/new.ejs")
 })
 
-app.post('/listings',async (req,res)=>{
+app.post('/listings',wrapAsync(async (req,res)=>{
     let {title,description,image,price,location,country}=req.body;
+    if (!req.body.listing){
+        throw new ExpressError(400,"Send Valid Data for Listings")
+    }
     let newListing = new listing({
         title:title,
         description:description,
@@ -73,17 +77,17 @@ app.post('/listings',async (req,res)=>{
     })
     await newListing.save().then(res=>console.log(res))
     res.redirect("/listings")
-})
+}))
 
 //EDIT ROUTE
 
-app.get('/listings/:id/edit',async(req,res)=>{
+app.get('/listings/:id/edit',wrapAsync(async(req,res)=>{
     let {id}=req.params;
     let listings=await listing.findById(id);
     res.render("listing/edit.ejs",{listings})
-})
+}))
 
-app.put('/listings/:id',async (req,res)=>{
+app.put('/listings/:id',wrapAsync(async (req,res)=>{
     let {id}=req.params;
     let {title,description,image,price,location,country}=req.body;
     let updtListing = await listing.findByIdAndUpdate(id,{
@@ -95,28 +99,37 @@ app.put('/listings/:id',async (req,res)=>{
         country:country
     },{runValidators:true},{new:true}).then(res=>console.log(res))
     res.redirect(`/listings/${id}`)
-})
+}))
 
 //DELETE ROUTE
 
-app.delete('/listings/:id',async(req,res)=>{
+app.delete('/listings/:id',wrapAsync(async(req,res)=>{
     let {id}=req.params;
     let delListing = await listing.findByIdAndDelete(id);
     res.redirect('/listings')
-})
+}))
 
 //SHOW ROUTE
 
-app.get('/listings/:id',async (req,res)=>{
+app.get('/listings/:id',wrapAsync(async (req,res)=>{
     let {id}=req.params;
     let listings=await listing.findById(id);
     res.render("listing/show.ejs",{listings})
-})
+}))
 
 
 
 app.get('/',(req,res)=>{
     res.send("Server Working")
+})
+
+app.all("*",(req,res,next)=>{
+    next(new ExpressError(404,"page not Found!"))
+})
+
+app.use((err,req,res,next)=>{
+    let {status=500,message="Internal Server Error!!"}=err;
+    res.status(status).send(message)
 })
 
 app.listen(port,(req,res)=>{
