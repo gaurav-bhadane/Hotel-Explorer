@@ -124,12 +124,12 @@ app.get('/',(req,res)=>{
 })
 
 app.all("*",(req,res,next)=>{
-    next(new ExpressError(404,"page not Found!"))
+    next(new ExpressError(404,"Page not Found!"))
 })
 
 app.use((err,req,res,next)=>{
     let {status=500,message="Internal Server Error!!"}=err;
-    res.status(status).send(message)
+    res.render("error.ejs",{err})
 })
 
 app.listen(port,(req,res)=>{
