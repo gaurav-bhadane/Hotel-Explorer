@@ -65,7 +65,7 @@ font-family: 'Poppins', sans-serif; */
     padding: 0 !important;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 15vh;
 }
 
 .container{

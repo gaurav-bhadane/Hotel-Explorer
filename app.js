@@ -6,6 +6,7 @@ const methodOverride=require('method-override');
 const ejsMate = require('ejs-mate');
 const wrapAsync=require("./utils/wrapAsync.js")
 const ExpressError=require('./utils/ExpressError')
+const {listingSchema}=require("./schema.js")
 
 app.use(methodOverride('_method'))
 
@@ -36,6 +37,20 @@ app.use(express.static(path.join(__dirname,"public")))
 
 const port = 8080;
 
+const validateListing = async (req,res,next)=>{
+    let {error}=listingSchema.validate(req.body)
+    if (error){
+        let errMsg=error.details.map((el)=>el.message).join(",")
+        console.log(errMsg)
+        next( new ExpressError(400,errMsg))
+    }
+    else{
+        next()
+    }
+
+
+}
+
 
 // app.get('/testlistings',async (req,res)=>{
 //     let listing1= new listing ({
@@ -62,20 +77,24 @@ app.get('/listings/new',(req,res)=>{
     res.render("listing/new.ejs")
 })
 
-app.post('/listings',wrapAsync(async (req,res)=>{
-    let {title,description,image,price,location,country}=req.body;
-    if (!req.body.listing){
-        throw new ExpressError(400,"Send Valid Data for Listings")
-    }
-    let newListing = new listing({
-        title:title,
-        description:description,
-        image:image,
-        price:price,
-        location:location,
-        country:country
-    })
+app.post('/listings',validateListing,wrapAsync(async (req,res)=>{
+    
+    // if (!title || !description || !image || !price || !location || !country) {
+    //     throw new ExpressError(400, "Send Valid Data for Listings");
+    // }
+    let newListing=new listing(req.body.listings);
+    console.log(newListing);
     await newListing.save().then(res=>console.log(res))
+    // if (!newListing.description){
+    //     throw new ExpressError(400, "Description is missing");
+    // }
+    // if (!newListing.location){
+    //     throw new ExpressError(400, "Location is missing");
+    // }
+    // if (!newListing.country){
+    //     throw new ExpressError(400, "Country is missing");
+    // }
+    
     res.redirect("/listings")
 }))
 
@@ -87,17 +106,10 @@ app.get('/listings/:id/edit',wrapAsync(async(req,res)=>{
     res.render("listing/edit.ejs",{listings})
 }))
 
-app.put('/listings/:id',wrapAsync(async (req,res)=>{
+app.put('/listings/:id',validateListing,wrapAsync(async (req,res)=>{
     let {id}=req.params;
     let {title,description,image,price,location,country}=req.body;
-    let updtListing = await listing.findByIdAndUpdate(id,{
-        title:title,
-        description:description,
-        image:image,
-        price:price,
-        location:location,
-        country:country
-    },{runValidators:true},{new:true}).then(res=>console.log(res))
+    let updtListing = await listing.findByIdAndUpdate(id,{...req.body.listings},{runValidators:true},{new:true}).then(res=>console.log(res))
     res.redirect(`/listings/${id}`)
 }))
 
