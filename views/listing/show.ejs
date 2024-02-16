@@ -4,7 +4,7 @@
         <div class="col-8 offset-3">
         <h1><b><%= listings.title %></b></h1>
     </div>
-    <div class="card col-6 offset-3 show-card">
+    <div class="card  col-6 offset-3 show-card">
         <img src="<%=listings.image%>" class="card-img-top show-img" alt="Listing image">
         <div class="card-body-2">
             <p class="card-text">
@@ -47,6 +47,26 @@
             </div>
             <button class="btn btn-dark add-btn">Submit</button>
         </form>
+        <hr>
+        <h4>All Reviews</h4>
+        <!-- <% for (list of listings.reviews) {  %>
+            <ul><li>
+                <%= list.comment %> :
+                <%= list.rating %> Star
+            </li></ul>
+        <% } %> -->
+        <% for (list of listings.reviews) {  %>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Gaurav Bhadane</h5>
+                  <p class="card-text"><%= list.comment %></p>
+                  <p class="card-text"><%= list.rating %></p>
+                </div>
+              </div>
+
+            </div>
+        <% } %>
+
     </div>
     <br>
 </body>

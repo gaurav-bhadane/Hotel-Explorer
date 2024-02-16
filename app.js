@@ -138,7 +138,7 @@ app.delete('/listings/:id',wrapAsync(async(req,res)=>{
 
 app.get('/listings/:id',wrapAsync(async (req,res)=>{
     let {id}=req.params;
-    let listings=await listing.findById(id);
+    let listings=await listing.findById(id).populate("reviews");
     res.render("listing/show.ejs",{listings})
 }))
 
