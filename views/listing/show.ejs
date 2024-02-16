@@ -32,7 +32,7 @@
     <hr>
     <div class="col-8 offset-3">
         <h4>Leave a Review</h4>
-        <form action="">
+        <form method="post" action="/listings/<%= listings.id %>/reviews">
             <div class="mb-3">
                 <label for="review[rating]" class="form-label">Rating</label>
                 <input class="form-range" type="range" min="1" max="5" id="rating"  name="review[rating]">
@@ -41,7 +41,7 @@
             <div class="mb-3">
                 <label class="form-label" for="review[comment]">Comment</label><br>
                 <textarea class="form-control" name="review[comment]" id="comment" cols="30" rows="5"></textarea><br>
-                <button class="btn btn-dark">Delete</button>
+                <button class="btn btn-dark add-btn">Submit</button>
             </div>
         </form>
     </div>
