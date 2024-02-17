@@ -1,3 +1,7 @@
+html{
+    width: 100vw !important;
+    box-sizing: border-box;
+}
 body{
     font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
@@ -106,3 +110,7 @@ font-family: 'Poppins', sans-serif; */
     padding-left: 0;
     padding-right: 0;
 }
+.review-card{
+    border: 2px solid green !important; 
+}
+
