@@ -1,5 +1,5 @@
 const express = require('express')
-const router=express.Router();
+const router=express.Router({mergeParams:true});
 const wrapAsync=require("../utils/wrapAsync.js")
 const ExpressError=require('../utils/ExpressError.js')
 const {listingSchema}=require("../schema.js")
@@ -30,23 +30,9 @@ router.get('/new',(req,res)=>{
 })
 
 router.post('/',validateListing,wrapAsync(async (req,res)=>{
-    
-    // if (!title || !description || !image || !price || !location || !country) {
-    //     throw new ExpressError(400, "Send Valid Data for Listings");
-    // }
     let newListing=new listing(req.body.listings);
     console.log(newListing);
     await newListing.save().then(res=>console.log(res))
-    // if (!newListing.description){
-    //     throw new ExpressError(400, "Description is missing");
-    // }
-    // if (!newListing.location){
-    //     throw new ExpressError(400, "Location is missing");
-    // }
-    // if (!newListing.country){
-    //     throw new ExpressError(400, "Country is missing");
-    // }
-    
     res.redirect("/listings")
 }))
 
@@ -80,5 +66,5 @@ router.get('/:id',wrapAsync(async (req,res)=>{
     let listings=await listing.findById(id).populate("reviews");
     res.render("listing/show.ejs",{listings})
 }))
- 
-module.exports=router
+
+module.exports=router;
