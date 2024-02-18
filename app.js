@@ -5,6 +5,7 @@ const path = require('path')
 const methodOverride=require('method-override');
 const ejsMate = require('ejs-mate');
 const ExpressError=require('./utils/ExpressError')
+const session =require('express-session')
 
 
 app.use(methodOverride('_method'))
@@ -19,7 +20,6 @@ app.engine('ejs',ejsMate);
 
 const listings=require('./routes/listing.js')
 const reviews=require('./routes/review.js')
-
 
 app.use('/listings',listings)
 app.use('/listings/:id/reviews',reviews)
@@ -38,6 +38,18 @@ main()
 app.set("view engine","ejs")
 app.set("views",path.join(__dirname,"/views"))
 app.use(express.static(path.join(__dirname,"public")))
+
+const sessionOptions = {
+    secret:"mysupersecretcode",
+    resave:false,
+    saveUninitialized:true,
+    cookie: {
+        expires: Date.now()+1000*60*60*24*3,
+        maxAge:1000*60*60*24*3,
+        httpOnly:true
+    }
+}
+app.use(session(sessionOptions))
 
 
 const port = 8080;
