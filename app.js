@@ -7,7 +7,9 @@ const ejsMate = require('ejs-mate');
 const ExpressError=require('./utils/ExpressError')
 const session =require('express-session')
 const flash = require('connect-flash')
-
+const passport = require("passport")
+const LocalStrategy = require("passport-local")
+const User= require("./models/user.js")
 
 app.use(methodOverride('_method'))
 
@@ -37,6 +39,14 @@ const sessionOptions = {
 app.use(session(sessionOptions)) 
 app.use(flash())
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()))
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 app.use((req,res,next)=>{
     res.locals.success=req.flash("success");
     res.locals.error=req.flash("error");
@@ -45,6 +55,15 @@ app.use((req,res,next)=>{
 
 const listings=require('./routes/listing.js')
 const reviews=require('./routes/review.js')
+
+app.get('/demouser',async(req,res)=>{
+    const faker1= new User ({
+        email: "student@gmail.com",
+        username:"gb2304"
+    })
+    let registeredUser=await User.register(faker1,"helloworld")
+    res.send(registeredUser)
+})
 
 app.use('/listings',listings)
 app.use('/listings/:id/reviews',reviews)
