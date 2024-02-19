@@ -53,20 +53,22 @@ app.use((req,res,next)=>{
     next()
 })
 
-const listings=require('./routes/listing.js')
-const reviews=require('./routes/review.js')
+const listingsRouter=require('./routes/listing.js')
+const reviewsRouter=require('./routes/review.js')
+const userRouter=require('./routes/user.js')
 
-app.get('/demouser',async(req,res)=>{
-    const faker1= new User ({
-        email: "student@gmail.com",
-        username:"gb2304"
-    })
-    let registeredUser=await User.register(faker1,"helloworld")
-    res.send(registeredUser)
-})
+// app.get('/demouser',async(req,res)=>{
+//     const faker1= new User ({
+//         email: "student@gmail.com",
+//         username:"gb2304"
+//     })
+//     let registeredUser=await User.register(faker1,"helloworld")
+//     res.send(registeredUser)
+// })
 
-app.use('/listings',listings)
-app.use('/listings/:id/reviews',reviews)
+app.use('/listings',listingsRouter)
+app.use('/listings/:id/reviews',reviewsRouter)
+app.use('/',userRouter);
 
 //requiring listing model
 const listing =require('./models/listing.js')
