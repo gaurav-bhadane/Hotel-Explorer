@@ -32,6 +32,7 @@ router.get('/new',isLoggedIn,(req,res)=>{
 
 router.post('/',isLoggedIn,validateListing,wrapAsync(async (req,res)=>{
     let newListing=new listing(req.body.listings);
+    newListing.owner=req.user._id;
     console.log(newListing);
     await newListing.save().then(res=>console.log(res))
     req.flash("success","New Listing Created")
@@ -71,11 +72,12 @@ router.delete('/:id',isLoggedIn,wrapAsync(async(req,res)=>{
 
 router.get('/:id',wrapAsync(async (req,res)=>{
     let {id}=req.params;
-    let listings=await listing.findById(id).populate("reviews");
+    let listings=await listing.findById(id).populate("reviews").populate("owner");
     if (!listings){
         req.flash("error","Listing does not exist");
         res.redirect("/listings")
     }
+    console.log(listings)
     res.render("listing/show.ejs",{listings})
 }))
 

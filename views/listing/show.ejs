@@ -9,6 +9,7 @@
         <div class="card-body-2">
             <p class="card-text">
                 <!-- <b><%= listings.title %></b><br> -->
+                @<%= listings.owner.username %><br>
                 <%= listings.description %><br>
                 ₹<%= listings.price.toLocaleString("en-IN") %>/-<br>
                 <%= listings.location %><br>
