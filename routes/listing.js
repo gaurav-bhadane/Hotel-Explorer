@@ -3,7 +3,7 @@ const router=express.Router({mergeParams:true});
 const wrapAsync=require("../utils/wrapAsync.js")
 const listing =require('../models/listing.js')
 const {isLoggedIn}=require('../middleware.js')
-const {isOwner}=require('../middleware.js')
+const {isOwner,isAuthor}=require('../middleware.js')
 const {validateListing}=require('../middleware.js')
 
 
@@ -64,7 +64,11 @@ router.delete('/:id',isLoggedIn,isOwner,wrapAsync(async(req,res)=>{
 
 router.get('/:id',wrapAsync(async (req,res)=>{
     let {id}=req.params;
-    let listings=await listing.findById(id).populate("reviews").populate("owner");
+    let listings=await listing.findById(id).populate({path : "reviews",
+        populate : {
+            path:"author",
+        }
+    }).populate("owner");
     if (!listings){
         req.flash("error","Listing does not exist");
         res.redirect("/listings")
