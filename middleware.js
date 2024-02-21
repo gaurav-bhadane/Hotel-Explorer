@@ -1,3 +1,8 @@
+const listing = require("./models/listing");
+const {listingSchema}=require("./schema.js")
+const ExpressError=require('./utils/ExpressError.js')
+const {reviewSchema}=require("./schema.js")
+
 module.exports.isLoggedIn = (req,res,next)=>{
     console.log(req.user)
     if (!req.isAuthenticated()){
@@ -13,4 +18,37 @@ module.exports.saveRedirectUrl = (req,res,next)=>{
         res.locals.redirectUrl=req.session.redirectUrl
     }
     next();
+}
+
+module.exports.isOwner = async (req,res,next)=>{
+    let {id} = req.params;
+    let listings=await listing.findById(id);
+    if (!listings.owner.equals(res.locals.currUser._id)){
+        req.flash("error","You don't have Permission");
+        return res.redirect(`/listings/$const listing =require('../models/listing.js')`)
+    }
+    next()
+}
+
+module.exports.validateListing = async (req,res,next)=>{
+    let {error}=listingSchema.validate(req.body)
+    if (error){
+        let errMsg=error.details.map((el)=>el.message).join(",")
+        console.log(errMsg)
+        next( new ExpressError(400,errMsg))
+    }
+    else{
+        next()
+    }
+}
+module.exports.validateReview = async (req,res,next)=>{
+    let {error}=reviewSchema.validate(req.body)
+    if (error){
+        let errMsg=error.details.map((el)=>el.message).join(",")
+        console.log(errMsg)
+        next( new ExpressError(400,errMsg))
+    }
+    else{
+        next()
+    }
 }
