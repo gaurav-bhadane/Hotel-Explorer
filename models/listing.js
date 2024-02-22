@@ -37,7 +37,7 @@ const Review = require("./review.js")
 
  listingSchema.post("findOneAndDelete",async(data)=>{
     if (data){
-        await Review.deleteMany({_id : {$in: data.reviews}}).then(res=>console.log(res))
+        await Review.deleteMany({_id : {$in: data.reviews}})
     }
 })
 

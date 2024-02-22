@@ -6,7 +6,7 @@ module.exports.reviewPost=async (req,res)=>{
     let newReview = new Review(req.body.review)
     newReview.author  = req.user._id;
     listings.reviews.push(newReview)
-    await newReview.save().then(res=>console.log(res))
+    await newReview.save()
     await listings.save()
     req.flash("success","New Review Created")
     res.redirect(`/listings/${listings._id}`)

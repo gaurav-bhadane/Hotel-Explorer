@@ -12,7 +12,6 @@ module.exports.postsignup=async(req,res,next)=>{
             email:email
         });
         let registeredUser=await User.register(newUser,password)
-        console.log(registeredUser);
         req.login(registeredUser,(err)=>{
             if (err){
                 return next(err)

@@ -118,3 +118,10 @@ font-family: 'Poppins', sans-serif; */
     width: 250px !important;
     height: 250px !important;
 }
+
+/* map */
+
+#map {
+     height: 400px !important;
+     width: 80vh !important;
+}
