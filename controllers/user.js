@@ -34,7 +34,7 @@ module.exports.postlogin=async(req,res)=>{
     // const {username,password}=req.body;
     req.flash("success","You are logged in")
     // res.send("Welcome to Wanderlust!! You're logged in.")
-    let redirectUrl=res.locals.redirectUrl || "/listings"
+    let redirectUrl=res.locals.redirectUrl || "/listings" ;
     res.redirect(redirectUrl)
 }
 
