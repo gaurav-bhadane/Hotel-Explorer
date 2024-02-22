@@ -5,13 +5,15 @@ const listing =require('../models/listing.js')
 const {isLoggedIn}=require('../middleware.js')
 const {isOwner,isAuthor}=require('../middleware.js')
 const {validateListing}=require('../middleware.js')
-
+const multer  = require('multer')
+const {storage}=require('../cloudConfig.js')
+const upload = multer({ storage })
 const listingController = require('../controllers/listing.js')
 
 router
     .route('/')
     .get(wrapAsync(listingController.index))
-    .post(isLoggedIn,validateListing,wrapAsync(listingController.newpost))
+    .post(isLoggedIn,upload.single("listings[image]"),validateListing,wrapAsync(listingController.newpost))
 
 //NEW ROUTE
 

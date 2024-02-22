@@ -11,10 +11,8 @@ const Review = require("./review.js")
         type:String
     },
     image : {
-        type:String,
-        default:"https://www.vedantu.com/seo/content-images/995fca49-5864-481e-b1f1-7043d27f7058.jpg",
-        set: (v)=> v===""?"https://www.vedantu.com/seo/content-images/995fca49-5864-481e-b1f1-7043d27f7058.jpg"
-            :v
+        url: String,
+        filename: String,
     },
     price : {
         type:Number

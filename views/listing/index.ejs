@@ -13,7 +13,7 @@
         <% for(list of listings){ %>
             <a href="listings/<%= list.id %>" class="listing-link">
                 <div class="card col-12 ">
-                    <img src="<%= list.image %>" class="card-img-top" style="height: 20rem;" alt="listing image">
+                    <img src="<%= list.image.url %>" class="card-img-top" style="height: 20rem;" alt="listing image">
                     <div class="card-img-overlay">Wanderlust</div>
                     <div class="card-body">
                         <h5 class="card-title"><b><%= list.title %></b></h5>
