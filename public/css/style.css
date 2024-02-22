@@ -114,3 +114,7 @@ font-family: 'Poppins', sans-serif; */
     border: 2px solid green !important; 
 }
 
+.oldimg {
+    width: 250px !important;
+    height: 250px !important;
+}

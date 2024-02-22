@@ -15,7 +15,6 @@ module.exports.newpost=async (req,res)=>{
     let newListing=new listing(req.body.listings);
     newListing.owner=req.user._id;
     newListing.image = {url,filename}
-    console.log(newListing);
     await newListing.save().then(res=>console.log(res))
     req.flash("success","New Listing Created")
     res.redirect("/listings")
@@ -28,14 +27,26 @@ module.exports.getedit=async(req,res)=>{
         req.flash("error","Listing does not exist");
         res.redirect("/listings")
     }
+
+    // let originalUrl = listings.image.url;
+    // originalUrl.replace("/upload","/upload/h_300,w_250")
     res.render("listing/edit.ejs",{listings})
 }
 
 module.exports.putedit=async (req,res)=>{
     let {id}=req.params;
-    let {title,description,image,price,location,country}=req.body;
-    let listings =await listing.findById(id);
-    let updtListing = await listing.findByIdAndUpdate(id,{...req.body.listings},{runValidators:true},{new:true}).then(res=>console.log(res))
+    // let {title,description,image,price,location,country}=req.body;
+    // let listings =await listing.findById(id);
+    let updtListing = await listing.findByIdAndUpdate(id,{...req.body.listings})
+    if (typeof(req.file)!== "undefined"){
+        // let udtListing = await listing.findById(id);
+        let url = req.file.path;
+        let filename = req.file.filename;
+        updtListing.image = {url,filename}
+        await updtListing.save();
+    }
+
+   
     req.flash("success","Listing Updated")
     res.redirect(`/listings/${id}`)
 }

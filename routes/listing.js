@@ -22,7 +22,7 @@ router.get('/new',isLoggedIn,listingController.new)
 
 router
     .route('/:id')
-    .put(validateListing,wrapAsync(listingController.putedit))
+    .put(isLoggedIn,isOwner,upload.single("listings[image]"),validateListing,wrapAsync(listingController.putedit))
     .delete(isLoggedIn,isOwner,wrapAsync(listingController.deleteRoute))
     .get(wrapAsync(listingController.showget))
 

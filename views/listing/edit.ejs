@@ -4,7 +4,7 @@
         <div class="col-8 offset-2">
     <h1>Edit Listing</h1><br>
     <h3>ID: <%= listings.id %></h3><br>
-    <form method="post" action="/listings/<%= listings.id %>?_method=PUT" novalidate class="needs-validation">
+    <form method="post" action="/listings/<%= listings.id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="listings[title]" class="form-label">Title:</label>
             <input type="text" class="form-control" name="listings[title]" value="<%= listings.title %>" required>
@@ -18,10 +18,13 @@
             <div class="invalid-feedback">Please Enter Valid Description</div>
             <br>
         </div>
+        <div class="mb-3 mt-3">
+            Original Listing Image <br><br>
+            <img class="oldimg" src="<%= listings.image.url %>" alt="">
+        </div>
         <div class="mb-3">
-            <label for="listings[image]" class="form-label">Image:</label>
-            <input type="text" name="listings[image]" class="form-control" value="<%= listings.image %>">
-            <br>
+            <label for="listings[image]" class="form-label">Upload Image</label>
+            <input type="file" class="form-control" name="listings[image]" placeholder="Image/URL" ><br>
         </div>
         <div class="row">
             <div class="mb-3 col-4">
@@ -37,7 +40,7 @@
                 <br>
             </div>
         </div>
-       
+
         <div class="mb-3">
             <label for="listings[country]" class="form-label">Country:</label>
             <input type="text" name="listings[country]" class="form-control" value="<%= listings.country %>" required>
