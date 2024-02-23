@@ -5,7 +5,6 @@ const {reviewSchema}=require("./schema.js")
 const Review=require("./models/review.js")
 
 module.exports.isLoggedIn = (req,res,next)=>{
-    console.log(req.user)
     if (!req.isAuthenticated()){
         req.session.redirectUrl=req.originalUrl;
         req.flash("error","You must be logged in to Create Listing")
