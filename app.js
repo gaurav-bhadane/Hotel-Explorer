@@ -2,9 +2,6 @@ if (process.env.NODE_ENV !="production"){
     require('dotenv').config()
 }
 
-
-
-
 const express = require('express')
 const app = express();
 const mongoose =require('mongoose')
@@ -85,6 +82,9 @@ const userRouter=require('./routes/user.js')
 app.use('/listings',listingsRouter)
 app.use('/listings/:id/reviews',reviewsRouter)
 app.use('/',userRouter);
+app.get("/",(req,res)=>{
+    res.redirect("/listings");
+})
 
 //requiring listing model
 const listing =require('./models/listing.js')
