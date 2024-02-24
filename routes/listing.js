@@ -25,6 +25,7 @@ router
     .put(isLoggedIn,isOwner,upload.single("listings[image]"),validateListing,wrapAsync(listingController.putedit))
     .delete(isLoggedIn,isOwner,wrapAsync(listingController.deleteRoute))
     .get(wrapAsync(listingController.showget))
+    // .get(wrapAsync(listingController.searchpost))
 
 
 //EDIT ROUTE

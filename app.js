@@ -26,9 +26,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.engine('ejs',ejsMate);
 
-app.get('/',(req,res)=>{
-    res.send("Server Working")
-})
 
 const sessionOptions = {
     secret:"mysupersecretcode",
